@@ -99,3 +99,4 @@ ENV/
 
 # mypy
 .mypy_cache/
+torioux_w.h5

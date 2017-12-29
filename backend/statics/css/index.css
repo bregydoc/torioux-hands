@@ -1,0 +1,16 @@
+.imgs-container {
+    text-align: justify;
+}
+.imgs-container > img {
+    display: inline-block;
+    vertical-align: top;
+
+    /* IE fix. */
+    *display: inline;
+    zoom: 1;
+}
+.imgs-container:after {
+    content: "";
+    width: 100%;
+    display: inline-block;
+}
