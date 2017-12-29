@@ -5,10 +5,10 @@ import sys
 import cv2
 import numpy as np
 
-model_json = open('torioux_model.json', 'r')
+model_json = open('./core/torioux_model.json', 'r')
 model = model_from_json(model_json.read())
 
-model.load_weights('../../torioux_w.h5')
+model.load_weights('../torioux_w.h5')
 
 sgd = SGD(lr=0.00001, decay=1e-6, momentum=0.9, nesterov=True)
 
