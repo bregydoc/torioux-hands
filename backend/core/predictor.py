@@ -17,5 +17,5 @@ model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
 imagepath = sys.argv[1]
 image = cv2.imread(imagepath)
 
-results = model.predict(np.array(image))
+results = model.predict(np.array([image]))
 print results

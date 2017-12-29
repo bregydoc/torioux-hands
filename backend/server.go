@@ -2,9 +2,8 @@ package main
 
 import (
 	"io/ioutil"
-	"log"
-	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/kataras/iris"
 )
@@ -28,22 +27,26 @@ func main() {
 			c.JSON(iris.Map{
 				"error": err.Error(),
 			})
+			return
 		}
+		defer file.Close()
+
 		data, err := ioutil.ReadAll(file)
 		if err != nil {
 			c.StatusCode(iris.StatusInternalServerError)
 			c.JSON(iris.Map{
 				"error": err.Error(),
 			})
+			return
 		}
-		file.Close()
 
-		err = ioutil.WriteFile("tmp/image.jpg", data, os.ModeDir)
+		err = ioutil.WriteFile("tmp/image.jpg", data, 0644)
 		if err != nil {
 			c.StatusCode(iris.StatusInternalServerError)
 			c.JSON(iris.Map{
 				"error": err.Error(),
 			})
+			return
 		}
 
 		cmd := exec.Command("python", command, "./tmp/image.jpg")
@@ -53,9 +56,16 @@ func main() {
 			c.JSON(iris.Map{
 				"error": err.Error(),
 			})
+			return
 		}
-
-		log.Println(string(out))
+		from := strings.Index(string(out), "[[")
+		to := strings.Index(string(out), "]]")
+		score := string(out)[from+2 : to]
+		score = strings.Trim(score, " ")
+		c.StatusCode(iris.StatusOK)
+		c.JSON(iris.Map{
+			"score": score,
+		})
 	})
 
 	app.Run(iris.Addr(":3600"))
