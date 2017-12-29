@@ -98,7 +98,7 @@
                     <div class="card-content">
                         <span class="card-title">Upload your image and test</span>
 
-                        <form action="/eval_photo">
+                        <form action="/eval_photo" method="post" enctype="multipart/form-data">
                             <div class="file-field input-field">
                                 <div class="btn" style="background-color: #C06C84;">
                                     <span>Select image</span>
@@ -108,6 +108,7 @@
                                     <input class="file-path validate" type="text">
                                 </div>
                             </div>
+                            <input type="submit" class="btn" value="Submit">
                         </form>
                     </div>
                 </div>
